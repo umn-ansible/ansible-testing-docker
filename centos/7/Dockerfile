@@ -12,6 +12,8 @@ RUN yum -y install \
         && yum -y autoremove \
         && yum clean all
 RUN echo "SSHD_OPTS='-o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes -o UsePrivilegeSeparation=no -o PidFile=/tmp/sshd.pid'" > /etc/default/ssh
+RUN systemctl disable getty@.service
+RUN rm /usr/lib/systemd/system/getty@.service
 RUN systemctl enable sshd.service
 
 CMD ["/usr/sbin/init"]
